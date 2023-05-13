@@ -11,9 +11,6 @@ A decentralized trivia quiz where users get rewarded for creating and answering 
 * Upload [MetaTrivia.sol](https://github.com/LipatJob/solidity-intermediate-project-1/blob/main/MetaTrivia.sol) to [Remix](https://remix.ethereum.org/)
 * Build and deploy smart contract
 * See the deployed contracts and interact with the smart contract
-```
-code blocks for commands
-```
 
 ## Help
 
