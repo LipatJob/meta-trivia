@@ -26,6 +26,7 @@ contract MetaTrivia {
 
         bytes32 questionHash = getHash(question);
         bytes32 answerHash = getHash(answer);
+        // MORE COMPLEX VALIDATION LOGIC
         if (trivias[questionHash].questionHash == questionHash) {
             revert("Question must be unique");
         }
@@ -44,17 +45,16 @@ contract MetaTrivia {
 
     function answerTrivia(
         bytes32 questionHash,
-        string memory answer
+        string memory givenAnswer
     ) public returns (bool) {
-        bytes32 givenAnswerHash = getHash(answer);
+        bytes32 givenAnswerHash = getHash(givenAnswer);
         bytes32 correctAnswerHash = trivias[questionHash].answerHash;
+        assert(correctAnswerHash != 0);
         if (givenAnswerHash == correctAnswerHash) {
             assert(msg.sender != address(0));
-
             Trivia storage targetTrivia = trivias[questionHash];
             targetTrivia.answerer = msg.sender;
             targetTrivia.isSolved = true;
-
             points[msg.sender] += ANSWER_TRIVIA_POINTS;
             return true;
         }
@@ -65,10 +65,6 @@ contract MetaTrivia {
         bytes32 questionHash
     ) public view returns (Trivia memory) {
         return trivias[questionHash];
-    }
-
-    function getBytes(bytes32 questionHash) public pure returns (bytes32) {
-        return questionHash;
     }
 
     function getPoints() public view returns (uint) {
